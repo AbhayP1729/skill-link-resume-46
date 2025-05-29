@@ -1,4 +1,3 @@
-
 // API configuration and service functions
 const API_CONFIG = {
   openai: {
@@ -12,6 +11,13 @@ const API_CONFIG = {
   affinda: {
     baseUrl: 'https://api.affinda.com/v3'
   }
+};
+
+// TODO: Replace these with your actual API keys
+const API_KEYS = {
+  openai: 'your-openai-api-key-here',
+  cohere: 'your-cohere-api-key-here',
+  affinda: 'your-affinda-api-key-here'
 };
 
 export interface ParsedResume {
@@ -70,13 +76,11 @@ export interface JobRecommendation {
 
 class APIService {
   private getApiKey(service: 'openai' | 'cohere' | 'affinda'): string {
-    // In a real app, these would come from environment variables or Supabase secrets
-    const keys = {
-      openai: localStorage.getItem('openai_api_key') || '',
-      cohere: localStorage.getItem('cohere_api_key') || '',
-      affinda: localStorage.getItem('affinda_api_key') || ''
-    };
-    return keys[service];
+    const key = API_KEYS[service];
+    if (!key || key.includes('your-') || key.includes('-here')) {
+      throw new Error(`${service.toUpperCase()} API key not configured. Please add your API key to the API_KEYS object in apiService.ts`);
+    }
+    return key;
   }
 
   async parseResume(file: File): Promise<ParsedResume> {

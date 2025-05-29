@@ -2,14 +2,12 @@
 import { useState } from "react";
 import { FileUpload } from "@/components/FileUpload";
 import { AnalysisResults } from "@/components/AnalysisResults";
-import { ApiKeySetup } from "@/components/ApiKeySetup";
 import { Header } from "@/components/Header";
 import { Brain } from "lucide-react";
 import { apiService, ParsedResume, AIAnalysis, JobRecommendation } from "@/services/apiService";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
-  const [isConfigured, setIsConfigured] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisStep, setAnalysisStep] = useState<string>("");
@@ -86,32 +84,6 @@ const Index = () => {
     setJobRecommendations([]);
     setAnalysisStep("");
   };
-
-  if (!isConfigured) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center mb-6">
-                <div className="p-3 bg-primary/10 rounded-full border border-primary/20">
-                  <Brain className="w-8 h-8 text-primary" />
-                </div>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                Smart Resume Analyzer
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-                AI-powered resume insights with real job market analysis
-              </p>
-            </div>
-            <ApiKeySetup onKeysConfigured={() => setIsConfigured(true)} />
-          </div>
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
